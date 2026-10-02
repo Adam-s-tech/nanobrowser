@@ -39,7 +39,7 @@ Looking for a powerful AI browser agent without the $200/month price tag of Open
 - **Flexible LLM Options** - Connect to your preferred LLM providers with the freedom to choose different models for different agents.
 - **Fully Open Source** - Complete transparency in how your browser is automated. No black boxes or hidden processes.
 
-> **Note:** We currently support OpenAI, Anthropic, Gemini, Ollama and custom OpenAI-Compatible providers, more providers will be supported.
+> **Note:** We currently support OpenAI, Anthropic, Gemini, DeepSeek, Grok, Azure OpenAI, OpenRouter, Ollama and custom OpenAI-Compatible providers, more providers will be supported.
 
 
 ## 📊 Key Features
@@ -146,17 +146,17 @@ If you prefer to build Nanobrowser yourself, follow these steps:
 Nanobrowser allows you to configure different LLM models for each agent to balance performance and cost. Here are recommended configurations:
 
 ### Better Performance
-- **Planner**: Claude Sonnet 4
+- **Planner**: Claude Sonnet 5.5
   - Better reasoning and planning capabilities
-- **Navigator**: Claude Haiku 3.5
+- **Navigator**: Claude Haiku 4.5
   - Efficient for web navigation tasks
   - Good balance of performance and cost
 
 ### Cost-Effective Configuration
-- **Planner**: Claude Haiku or GPT-4o
+- **Planner**: Claude Haiku 4.5 or Gemini 3.8 Flash
   - Reasonable performance at lower cost
   - May require more iterations for complex tasks
-- **Navigator**: Gemini 2.5 Flash or GPT-4o-mini
+- **Navigator**: Gemini 3.5 Flash-Lite
   - Lightweight and cost-efficient
   - Suitable for basic navigation tasks
 
@@ -240,10 +240,10 @@ Join our growing community of developers and users:
 Nanobrowser builds on top of other awesome open-source projects:
 
 - [Browser Use](https://github.com/browser-use/browser-use)
-- [Puppeteer](https://github.com/EmergenceAI/Agent-E)
+- [Puppeteer](https://github.com/puppeteer/puppeteer)
 - [WXT](https://wxt.dev)
 - [Chrome Extension Boilerplate](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite) (the original build foundation)
-- [LangChain](https://github.com/langchain-ai/langchainjs)
+- [Vercel AI SDK](https://github.com/vercel/ai)
 
 Huge thanks to their creators and contributors!
 

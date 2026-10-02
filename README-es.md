@@ -35,7 +35,7 @@ Nanobrowser es una herramienta de automatización web con IA que se ejecuta en t
 - **Opciones Flexibles de LLM** - Conéctate con tu proveedor de LLM preferido con la libertad de elegir diferentes modelos para diferentes agentes.
 - **Totalmente Open Source** - Transparencia total en cómo se automatiza tu navegador. Sin procesos ocultos ni cajas negras.
 
-> **Nota:** Actualmente ofrecemos soporte para OpenAI, Anthropic, Gemini, Ollama y proveedores personalizados compatibles con OpenAI, próximamente se ofrecerá soporte a más proveedores.
+> **Nota:** Actualmente ofrecemos soporte para OpenAI, Anthropic, Gemini, DeepSeek, Grok, Azure OpenAI, OpenRouter, Ollama y proveedores personalizados compatibles con OpenAI, próximamente se ofrecerá soporte a más proveedores.
 
 
 ## 📊 Funciones Clave
@@ -93,8 +93,8 @@ Para obtener la versión más reciente con todas las funciones nuevas:
 Si prefieres compilar Nanobrowser por ti mismo, sigue estos pasos:
 
 1. **Requisitos Previos**:
-   * [Node.js](https://nodejs.org/) (v24.11.0 o superior)
-   * [pnpm](https://pnpm.io/installation) (v10.34.6 o superior)
+   * [Node.js](https://nodejs.org/) 24 LTS (v24.11.0 o superior)
+   * [pnpm](https://pnpm.io/installation) (v10 o superior; cambia automáticamente a la versión fijada v10.34.6)
 
 2. **Clonar el Repositorio**:
    ```bash
@@ -104,10 +104,11 @@ Si prefieres compilar Nanobrowser por ti mismo, sigue estos pasos:
 
 3. **Instalar Dependencias**:
    ```bash
+   corepack enable # omítelo si ya tienes pnpm 10+ instalado
    pnpm install
    ```
 
-4. **Compilar la Extensión**:
+4. **Compilar la Extensión** (WXT, Chromium Manifest V3):
    ```bash
    pnpm build
    ```
@@ -120,23 +121,26 @@ Si prefieres compilar Nanobrowser por ti mismo, sigue estos pasos:
    ```bash
    pnpm dev
    ```
+   Carga `dist/` manualmente como extensión desempaquetada en Chrome o Edge. WXT actualiza las páginas con HMR y recarga la extensión cuando cambian el background o el content script. Usa siempre la misma ruta `dist/` para conservar el ID local de la extensión y la configuración guardada.
+
+   `pnpm zip` genera un archivo de producción en `dist-zip/` para Chrome y Edge.
 
 ## 🤖 Eligiendo tus Modelos
 
 Nanobrowser te permite configurar distintos modelos LLM para cada agente para equilibrar costo y rendimiento. Aquí están las configuraciones recomendadas:
 
 ### Mejor Rendimiento
-- **Planner**: Claude Sonnet 4
+- **Planner**: Claude Sonnet 5.5
   - Mejores capacidades de razonamiento y planificación
-- **Navigator**: Claude Haiku 3.5
+- **Navigator**: Claude Haiku 4.5
   - Eficiente para tareas de navegación web
   - Buen equilibrio entre rendimiento y costo
 
 ### Configuración Económica
-- **Planner**: Claude Haiku or GPT-4o
+- **Planner**: Claude Haiku 4.5 o Gemini 3.8 Flash
   - Rendimiento razonable a menor costo
   - Puede requerir más iteraciones para tareas complejas
-- **Navigator**: Gemini 2.5 Flash or GPT-4o-mini
+- **Navigator**: Gemini 3.5 Flash-Lite
   - Ligero y económico
   - Adecuado para tareas básicas de navegación
 
@@ -220,9 +224,10 @@ En su lugar, por favor crea un [GitHub Security Advisory](https://github.com/nan
 Nanobrowser se construye sobre otros increíbles proyectos de código abierto:
 
 - [Browser Use](https://github.com/browser-use/browser-use)
-- [Puppeteer](https://github.com/EmergenceAI/Agent-E)
-- [Chrome Extension Boilerplate](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite)
-- [LangChain](https://github.com/langchain-ai/langchainjs)
+- [Puppeteer](https://github.com/puppeteer/puppeteer)
+- [WXT](https://wxt.dev)
+- [Chrome Extension Boilerplate](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite) (la base original de compilación)
+- [Vercel AI SDK](https://github.com/vercel/ai)
 
 ¡Un enorme agradecimiento a sus creadores y colaboradores!
 

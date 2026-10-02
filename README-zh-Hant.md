@@ -36,7 +36,7 @@ Nanobrowser 是一款在瀏覽器中執行的開放原始碼 AI 網頁自動化�
 - **彈性的 LLM 選項** - 可連接您偏好的 LLM 供應商，並可為不同代理選擇不同模型。
 - **完全開放原始碼** - 瀏覽器自動化過程完全透明，沒有任何黑箱作業或隱藏的處理程序。
 
-> **請注意：** 我們目前支援 OpenAI、Anthropic、Gemini、Ollama 以及自訂的 OpenAI 相容供應商，未來將會支援更多。
+> **請注意：** 我們目前支援 OpenAI、Anthropic、Gemini、DeepSeek、Grok、Azure OpenAI、OpenRouter、Ollama 以及自訂的 OpenAI 相容供應商，未來將會支援更多。
 
 
 ## 📊 主要功能
@@ -106,8 +106,8 @@ Nanobrowser 是一款在瀏覽器中執行的開放原始碼 AI 網頁自動化�
 如果您偏好自行建置 Nanobrowser，請依照以下步驟操作：
 
 1. **先決條件**：
-   * [Node.js](https://nodejs.org/) (v24.11.0 或更高版本)
-   * [pnpm](https://pnpm.io/installation) (v10.34.6 或更高版本)
+   * [Node.js](https://nodejs.org/) 24 LTS (v24.11.0 或更高版本)
+   * [pnpm](https://pnpm.io/installation) (v10 或更高版本；會自動切換到固定的 v10.34.6)
 
 2. **複製儲存庫**：
    ```bash
@@ -117,10 +117,11 @@ Nanobrowser 是一款在瀏覽器中執行的開放原始碼 AI 網頁自動化�
 
 3. **安裝相依套件**：
    ```bash
+   corepack enable # 若已安裝 pnpm 10 以上版本可略過
    pnpm install
    ```
 
-4. **建置擴充功能**：
+4. **建置擴充功能** (WXT，Chromium Manifest V3)：
    ```bash
    pnpm build
    ```
@@ -133,23 +134,26 @@ Nanobrowser 是一款在瀏覽器中執行的開放原始碼 AI 網頁自動化�
    ```bash
    pnpm dev
    ```
+   請在 Chrome 或 Edge 中手動以「載入未封裝項目」載入 `dist/`。WXT 會透過 HMR 更新頁面，並在 background／content 變更時重新載入擴充功能。請持續使用相同的 `dist/` 路徑，以保留本機擴充功能 ID 與已儲存的設定。
+
+   `pnpm zip` 會在 `dist-zip/` 中建立適用於 Chrome 與 Edge 的正式版封存檔。
 
 ## 🤖 選擇您的模型
 
 Nanobrowser 允許您為每個代理設定不同的 LLM 模型，以平衡效能與成本。以下是建議的設定：
 
 ### 追求高效能
-- **Planner**：Claude Sonnet 4
+- **Planner**：Claude Sonnet 5.5
   - 更佳的推理與規劃能力
-- **Navigator**：Claude Haiku 3.5
+- **Navigator**：Claude Haiku 4.5
   - 有效率地處理網頁導覽任務
   - 在效能與成本之間取得良好平衡
 
 ### 講求成本效益
-- **Planner**：Claude Haiku 或 GPT-4o
+- **Planner**：Claude Haiku 4.5 或 Gemini 3.8 Flash
   - 以較低成本獲得合理的效能
   - 處理複雜任務可能需要更多次的迭代
-- **Navigator**：Gemini 2.5 Flash 或 GPT-4o-mini
+- **Navigator**：Gemini 3.5 Flash-Lite
   - 輕量級且具成本效益
   - 適合基本的導覽任務
 
@@ -233,9 +237,10 @@ Nanobrowser 允許您為每個代理設定不同的 LLM 模型，以平衡效能
 Nanobrowser 的開發建立在許多優秀的開放原始碼專案之上：
 
 - [Browser Use](https://github.com/browser-use/browser-use)
-- [Puppeteer](https://github.com/EmergenceAI/Agent-E)
-- [Chrome Extension Boilerplate](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite)
-- [LangChain](https://github.com/langchain-ai/langchainjs)
+- [Puppeteer](https://github.com/puppeteer/puppeteer)
+- [WXT](https://wxt.dev)
+- [Chrome Extension Boilerplate](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite) (最初的建置基礎)
+- [Vercel AI SDK](https://github.com/vercel/ai)
 
 由衷感謝這些專案的建立者與貢獻者！
 

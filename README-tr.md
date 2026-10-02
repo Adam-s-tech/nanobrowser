@@ -35,7 +35,7 @@ OpenAI Operator'ın aylık 200 dolarlık ücretinden kurtulmak mı istiyorsunuz?
 - **Esnek LLM Seçenekleri** - Tercih ettiğiniz LLM sağlayıcılarına bağlanın, farklı ajanlar için farklı modeller seçme özgürlüğünüz olsun.
 - **Tamamen Açık Kaynak** - Tarayıcınızın nasıl otomatikleştirildiğini şeffaf bir şekilde görün. Gizli süreçler yok.
 
-> **Not:** Şu anda OpenAI, Anthropic, Gemini, Ollama ve OpenAI uyumlu özel sağlayıcıları destekliyoruz. Daha fazlası yolda.
+> **Not:** Şu anda OpenAI, Anthropic, Gemini, DeepSeek, Grok, Azure OpenAI, OpenRouter, Ollama ve OpenAI uyumlu özel sağlayıcıları destekliyoruz. Daha fazlası yolda.
 
 ## 📊 Temel Özellikler
 
@@ -102,8 +102,8 @@ En yeni özellikleri içeren en güncel sürümü kurmak için:
 Nanobrowser’ı kendiniz derlemek isterseniz şu adımları izleyin:
 
 1. **Gereksinimler**:
-   * [Node.js](https://nodejs.org/) (v24.11.0 veya üstü)
-   * [pnpm](https://pnpm.io/installation) (v10.34.6 veya üstü)
+   * [Node.js](https://nodejs.org/) 24 LTS (v24.11.0 veya üstü)
+   * [pnpm](https://pnpm.io/installation) (v10 veya üstü; sabitlenmiş v10.34.6 sürümüne otomatik geçer)
 
 2. **Depoyu Klonlayın**:
    ```bash
@@ -114,10 +114,11 @@ Nanobrowser’ı kendiniz derlemek isterseniz şu adımları izleyin:
 3. **Bağımlılıkları Yükleyin**:
 
    ```bash
+   corepack enable # pnpm 10+ zaten kuruluysa bu adımı atlayın
    pnpm install
    ```
 
-4. **Eklentiyi Derleyin**:
+4. **Eklentiyi Derleyin** (WXT, Chromium Manifest V3):
 
    ```bash
    pnpm build
@@ -134,27 +135,31 @@ Nanobrowser’ı kendiniz derlemek isterseniz şu adımları izleyin:
    pnpm dev
    ```
 
+   `dist/` klasörünü Chrome veya Edge'e paketlenmemiş eklenti olarak elle yükleyin. WXT sayfaları HMR ile günceller ve background/content değişikliklerinde eklentiyi yeniden yükler. Yerel eklenti kimliğini ve kayıtlı ayarları korumak için hep aynı `dist/` yolunu kullanın.
+
+   `pnpm zip`, Chrome ve Edge için `dist-zip/` içinde bir üretim arşivi oluşturur.
+
 ## 🤖 Model Seçimi
 
 Nanobrowser, her ajan için farklı LLM modelleri ayarlamanıza olanak tanır. Böylece performans ve maliyet arasında denge kurabilirsiniz. İşte önerilen yapılandırmalar:
 
 ### Daha Yüksek Performans
 
-* **Planner**: Claude Sonnet 4
+* **Planner**: Claude Sonnet 5.5
 
   * Daha iyi mantıksal düşünme ve planlama
-* **Navigator**: Claude Haiku 3.5
+* **Navigator**: Claude Haiku 4.5
 
   * Web gezintisi görevlerinde verimli
   * Performans ve maliyet dengesi
 
 ### Uygun Maliyetli Yapılandırma
 
-* **Planner**: Claude Haiku veya GPT-4o
+* **Planner**: Claude Haiku 4.5 veya Gemini 3.8 Flash
 
   * Düşük maliyetle makul performans
   * Karmaşık görevlerde daha fazla yineleme gerekebilir
-* **Navigator**: Gemini 2.5 Flash veya GPT-4o-mini
+* **Navigator**: Gemini 3.5 Flash-Lite
 
   * Hafif ve ekonomik
   * Temel gezinme görevleri için yeterli
@@ -247,9 +252,10 @@ Giderek büyüyen geliştirici ve kullanıcı topluluğumuza katılın:
 Nanobrowser, şu harika açık kaynak projeler üzerine inşa edilmiştir:
 
 * [Browser Use](https://github.com/browser-use/browser-use)
-* [Puppeteer](https://github.com/EmergenceAI/Agent-E)
-* [Chrome Extension Boilerplate](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite)
-* [LangChain](https://github.com/langchain-ai/langchainjs)
+* [Puppeteer](https://github.com/puppeteer/puppeteer)
+* [WXT](https://wxt.dev)
+* [Chrome Extension Boilerplate](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite) (ilk derleme altyapısı)
+* [Vercel AI SDK](https://github.com/vercel/ai)
 
 Tüm yaratıcılarına ve katkıda bulunanlara büyük teşekkürler!
 

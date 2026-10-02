@@ -48,10 +48,11 @@ This is a **single pnpm package** built by **WXT**, with WXT's default layout at
 - `src/background/` - Background service worker with multi-agent system
   - `src/background/agent/` - AI agent implementations (Navigator, Planner, Validator)
   - `src/background/browser/` - Browser automation and DOM manipulation
+  - `src/background/llm/` - AI SDK provider setup, structured generation, and LLM error handling
 - `src/side-panel/` - Main chat interface (React + TypeScript + Tailwind)
 - `src/options/` - Extension settings page (React + TypeScript)
 - `src/content/` - Content script for page injection
-- `src/storage/` - Chrome extension storage abstraction (`@extension/storage`)
+- `src/storage/` - Chrome extension storage abstraction (`@extension/storage`); LLM providers and default models are defined in `src/storage/lib/settings/types.ts`
 - `src/i18n/` - Internationalization (`@extension/i18n`)
 - `src/ui/` - Shared React components and the `withUI` Tailwind helper (`@extension/ui`)
 - `src/shared/` - Common hooks, HOCs, and utilities (`@extension/shared`)
@@ -70,7 +71,7 @@ Agent logic is under `src/background/agent/`.
 ### Build System
 
 - **WXT** uses Vite to bundle every entrypoint, including shared code, directly from source
-- `@extension/*` imports are aliases to `src/<name>` defined in `wxt.config.ts`
+- `@extension/*` imports are aliases to `src/<name>` defined in `wxt.config.ts`; `vitest.config.mts` repeats them, so update both when adding an alias
 - **TypeScript** with strict configuration; the root `tsconfig.json` extends the generated `.wxt/tsconfig.json` for alias paths only
 - **ESLint** + **Prettier** for code quality
 
