@@ -93,8 +93,8 @@ Para obtener la versión más reciente con todas las funciones nuevas:
 Si prefieres compilar Nanobrowser por ti mismo, sigue estos pasos:
 
 1. **Requisitos Previos**:
-   * [Node.js](https://nodejs.org/) (v22.12.0 o superior)
-   * [pnpm](https://pnpm.io/installation) (v9.15.1 o superior)
+   * [Node.js](https://nodejs.org/) (v24.11.0 o superior)
+   * [pnpm](https://pnpm.io/installation) (v10.34.6 o superior)
 
 2. **Clonar el Repositorio**:
    ```bash

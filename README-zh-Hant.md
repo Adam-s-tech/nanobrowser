@@ -36,7 +36,7 @@ Nanobrowser 是一款在瀏覽器中執行的開放原始碼 AI 網頁自動化�
 - **彈性的 LLM 選項** - 可連接您偏好的 LLM 供應商，並可為不同代理選擇不同模型。
 - **完全開放原始碼** - 瀏覽器自動化過程完全透明，沒有任何黑箱作業或隱藏的處理程序。
 
-> **請注意：** 我們目前支援 OpenAI、Anthropic、Gemini、Ollama、Groq、Cerebras、Llama 以及自訂的 OpenAI 相容供應商，未來將會支援更多。
+> **請注意：** 我們目前支援 OpenAI、Anthropic、Gemini、Ollama 以及自訂的 OpenAI 相容供應商，未來將會支援更多。
 
 
 ## 📊 主要功能
@@ -106,8 +106,8 @@ Nanobrowser 是一款在瀏覽器中執行的開放原始碼 AI 網頁自動化�
 如果您偏好自行建置 Nanobrowser，請依照以下步驟操作：
 
 1. **先決條件**：
-   * [Node.js](https://nodejs.org/) (v22.12.0 或更高版本)
-   * [pnpm](https://pnpm.io/installation) (v9.15.1 或更高版本)
+   * [Node.js](https://nodejs.org/) (v24.11.0 或更高版本)
+   * [pnpm](https://pnpm.io/installation) (v10.34.6 或更高版本)
 
 2. **複製儲存庫**：
    ```bash

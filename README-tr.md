@@ -35,7 +35,7 @@ OpenAI Operator'ın aylık 200 dolarlık ücretinden kurtulmak mı istiyorsunuz?
 - **Esnek LLM Seçenekleri** - Tercih ettiğiniz LLM sağlayıcılarına bağlanın, farklı ajanlar için farklı modeller seçme özgürlüğünüz olsun.
 - **Tamamen Açık Kaynak** - Tarayıcınızın nasıl otomatikleştirildiğini şeffaf bir şekilde görün. Gizli süreçler yok.
 
-> **Not:** Şu anda OpenAI, Anthropic, Gemini, Ollama, Groq, Cerebras ve OpenAI uyumlu özel sağlayıcıları destekliyoruz. Daha fazlası yolda.
+> **Not:** Şu anda OpenAI, Anthropic, Gemini, Ollama ve OpenAI uyumlu özel sağlayıcıları destekliyoruz. Daha fazlası yolda.
 
 ## 📊 Temel Özellikler
 
@@ -102,8 +102,8 @@ En yeni özellikleri içeren en güncel sürümü kurmak için:
 Nanobrowser’ı kendiniz derlemek isterseniz şu adımları izleyin:
 
 1. **Gereksinimler**:
-   * [Node.js](https://nodejs.org/) (v22.12.0 veya üstü)
-   * [pnpm](https://pnpm.io/installation) (v9.15.1 veya üstü)
+   * [Node.js](https://nodejs.org/) (v24.11.0 veya üstü)
+   * [pnpm](https://pnpm.io/installation) (v10.34.6 veya üstü)
 
 2. **Depoyu Klonlayın**:
    ```bash

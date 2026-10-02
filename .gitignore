@@ -19,13 +19,13 @@
 # etc
 .DS_Store
 .idea
-**/.turbo
 
 # compiled
-chrome-extension/public/manifest.json
 **/tailwind-output.css
 
 .nanobrowser
 .vscode
 .cursor
 *.py
+.wxt/
+.output/

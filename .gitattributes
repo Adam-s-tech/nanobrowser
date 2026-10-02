@@ -26,7 +26,6 @@
 .prettierrc text
 .nvmrc text
 tsconfig.json text
-turbo.json text
 
 # Chrome extension
 *.crx binary

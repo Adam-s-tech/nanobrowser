@@ -9,3 +9,5 @@ node_modules
 LICENSE
 *.md
 pnpm-lock.yaml
+.wxt/
+.output/

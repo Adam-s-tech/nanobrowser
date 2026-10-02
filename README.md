@@ -39,7 +39,7 @@ Looking for a powerful AI browser agent without the $200/month price tag of Open
 - **Flexible LLM Options** - Connect to your preferred LLM providers with the freedom to choose different models for different agents.
 - **Fully Open Source** - Complete transparency in how your browser is automated. No black boxes or hidden processes.
 
-> **Note:** We currently support OpenAI, Anthropic, Gemini, Ollama, Groq, Cerebras, Llama and custom OpenAI-Compatible providers, more providers will be supported.
+> **Note:** We currently support OpenAI, Anthropic, Gemini, Ollama and custom OpenAI-Compatible providers, more providers will be supported.
 
 
 ## 📊 Key Features
@@ -109,8 +109,8 @@ To get the most recent version with all the latest features:
 If you prefer to build Nanobrowser yourself, follow these steps:
 
 1. **Prerequisites**:
-   * [Node.js](https://nodejs.org/) (v22.12.0 or higher)
-   * [pnpm](https://pnpm.io/installation) (v9.15.1 or higher)
+   * [Node.js](https://nodejs.org/) 24 LTS (v24.11.0 or higher)
+   * [pnpm](https://pnpm.io/installation) (v10 or newer; switches to the pinned v10.34.6 automatically)
 
 2. **Clone the Repository**:
    ```bash
@@ -120,10 +120,11 @@ If you prefer to build Nanobrowser yourself, follow these steps:
 
 3. **Install Dependencies**:
    ```bash
+   corepack enable # skip if pnpm 10+ is already installed
    pnpm install
    ```
 
-4. **Build the Extension**:
+4. **Build the Extension** (WXT, Chromium Manifest V3):
    ```bash
    pnpm build
    ```
@@ -136,6 +137,9 @@ If you prefer to build Nanobrowser yourself, follow these steps:
    ```bash
    pnpm dev
    ```
+   Load `dist/` unpacked manually in Chrome or Edge. WXT updates pages with HMR and reloads the extension for background/content changes. Keep using the same `dist/` path to preserve your local extension ID and stored settings.
+
+   `pnpm zip` builds a production archive in `dist-zip/` for Chrome and Edge.
 
 ## 🤖 Choosing Your Models
 
@@ -237,7 +241,8 @@ Nanobrowser builds on top of other awesome open-source projects:
 
 - [Browser Use](https://github.com/browser-use/browser-use)
 - [Puppeteer](https://github.com/EmergenceAI/Agent-E)
-- [Chrome Extension Boilerplate](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite)
+- [WXT](https://wxt.dev)
+- [Chrome Extension Boilerplate](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite) (the original build foundation)
 - [LangChain](https://github.com/langchain-ai/langchainjs)
 
 Huge thanks to their creators and contributors!
