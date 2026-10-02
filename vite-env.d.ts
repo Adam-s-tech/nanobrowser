@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_EXAMPLE: string;
+  readonly VITE_POSTHOG_API_KEY?: string;
 }
 
 interface ImportMeta {
