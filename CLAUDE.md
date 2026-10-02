@@ -8,7 +8,7 @@ Nanobrowser is an open-source AI web automation Chrome extension that runs multi
 
 ## Development Commands
 
-**Package Manager**: Always use `pnpm` 10.34.6 (pinned in `package.json`). Use Node.js 24 LTS; any global pnpm 10+ (or `corepack enable`) switches to the pinned version, and `engines` refuses pnpm 9 and npm. `.npmrc` sets `minimum-release-age=4320`, so pnpm refuses package versions published less than 72 hours ago.
+**Package Manager**: Always use `pnpm` 10.34.6 (pinned in `package.json`). Use Node.js 24 LTS; any global pnpm 10+ (or `corepack enable`) switches to the pinned version, and `engines` refuses pnpm 9 and npm. `.npmrc` sets `minimum-release-age=1920`, so pnpm refuses package versions published less than 32 hours ago.
 
 **Core Commands**:
 
