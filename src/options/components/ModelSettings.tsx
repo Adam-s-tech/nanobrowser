@@ -19,6 +19,7 @@ import {
   getDefaultDisplayNameFromProviderId,
   getDefaultProviderConfig,
   getDefaultReasoningEffort,
+  normalizeReasoningEffort,
   getProviderTypeByProviderId,
   type ProviderConfig,
   type ReasoningEffort,
@@ -38,7 +39,6 @@ function isOpenAIReasoningModel(modelName: string): boolean {
 
 const reasoningEffortOptions: Array<{ value: ReasoningEffort; label: string }> = [
   { value: 'none', label: 'None' },
-  { value: 'minimal', label: 'Minimal' },
   { value: 'low', label: 'Low' },
   { value: 'medium', label: 'Medium' },
   { value: 'high', label: 'High' },
@@ -117,8 +117,7 @@ export const ModelSettings = ({ isDarkMode = false }: ModelSettingsProps) => {
             if (config.reasoningEffort) {
               setReasoningEffort(prev => ({
                 ...prev,
-                // Older versions saved OpenAI's Minimal option as 'minimal/none'
-                [agent]: (config.reasoningEffort as string) === 'minimal/none' ? 'minimal' : config.reasoningEffort,
+                [agent]: normalizeReasoningEffort(config.reasoningEffort),
               }));
             }
           }

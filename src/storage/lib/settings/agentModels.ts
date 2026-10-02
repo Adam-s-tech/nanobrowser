@@ -4,7 +4,15 @@ import type { BaseStorage } from '../base/types';
 import { AgentNameEnum } from './types';
 
 // Reasoning effort for a model. 'none' sends no effort, so the model's own default applies
-export type ReasoningEffort = 'none' | 'minimal' | 'low' | 'medium' | 'high' | 'xhigh';
+export type ReasoningEffort = 'none' | 'low' | 'medium' | 'high' | 'xhigh';
+
+/**
+ * A saved reasoning effort as the current options. Minimal was removed, so a saved 'minimal'
+ * (or the older 'minimal/none') becomes low.
+ */
+export function normalizeReasoningEffort(saved: string | undefined): ReasoningEffort | undefined {
+  return saved === 'minimal' || saved === 'minimal/none' ? 'low' : (saved as ReasoningEffort | undefined);
+}
 
 // Interface for a single model configuration
 export interface ModelConfig {

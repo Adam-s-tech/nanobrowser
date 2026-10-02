@@ -12,6 +12,7 @@ import {
   ProviderTypeEnum,
   getDefaultReasoningEffort,
   getProviderTypeByProviderId,
+  normalizeReasoningEffort,
 } from '@extension/storage';
 import type { ChatModel, StructuredMode } from './types';
 
@@ -72,8 +73,7 @@ export function getReasoningEffort(
   providerConfig: ProviderConfig,
   modelConfig: ModelConfig,
 ): SentReasoningEffort | undefined {
-  // The settings page used to save OpenAI's Minimal option as 'minimal/none'
-  const saved = (modelConfig.reasoningEffort as string) === 'minimal/none' ? 'minimal' : modelConfig.reasoningEffort;
+  const saved = normalizeReasoningEffort(modelConfig.reasoningEffort);
   const effort =
     saved ?? getDefaultReasoningEffort(providerConfig.type ?? getProviderTypeByProviderId(modelConfig.provider));
   return effort === 'none' ? undefined : effort;
@@ -90,25 +90,9 @@ function acceptsOpenAIXhigh(modelName: string): boolean {
   return /gpt-6/.test(modelName) || /gpt-5\.([2-9]|\d{2,})/.test(modelName);
 }
 
-/**
- * Map an effort an OpenAI reasoning model rejects to the nearest one it accepts.
- * xhigh becomes high where unsupported. With `mapMinimal` (not Azure), gpt-5.1 to gpt-5.4 and gpt-6-luna,
- * which don't support minimal, get none; the other gpt-6 models support neither minimal nor none, so they get low
- */
-function getOpenAIReasoningEffort(modelName: string, effort: SentReasoningEffort, mapMinimal: boolean) {
-  if (effort === 'xhigh') {
-    return acceptsOpenAIXhigh(modelName) ? effort : ('high' as const);
-  }
-  if (!mapMinimal || effort !== 'minimal') {
-    return effort;
-  }
-  if (modelName.includes('gpt-6-luna') || /gpt-5\.[1-4]/.test(modelName)) {
-    return 'none' as const;
-  }
-  if (modelName.includes('gpt-6')) {
-    return 'low' as const;
-  }
-  return effort;
+// Map xhigh to high on OpenAI reasoning models that don't support it
+function getOpenAIReasoningEffort(modelName: string, effort: SentReasoningEffort) {
+  return effort === 'xhigh' && !acceptsOpenAIXhigh(modelName) ? ('high' as const) : effort;
 }
 
 /**
@@ -120,14 +104,14 @@ function getOpenAIReasoningEffort(modelName: string, effort: SentReasoningEffort
 function getOpenAIFamilyOptions(
   modelName: string,
   effort: SentReasoningEffort | undefined,
-  { mapMinimal, anyModelReasons }: { mapMinimal: boolean; anyModelReasons: boolean },
+  { anyModelReasons }: { anyModelReasons: boolean },
 ): Pick<ChatModel, 'settings' | 'providerOptions'> {
   const reasoningModel = isOpenAIReasoningModel(modelName);
   // Custom endpoints serving other models get the chosen effort as is
   const reasoningEffort = !effort
     ? undefined
     : reasoningModel
-      ? getOpenAIReasoningEffort(modelName, effort, mapMinimal)
+      ? getOpenAIReasoningEffort(modelName, effort)
       : anyModelReasons
         ? effort
         : undefined;
@@ -221,9 +205,7 @@ function createAzureChatModel(
     provider: modelConfig.provider,
     modelName: deploymentName,
     model: azure.chat(deploymentName),
-    // Azure never had the minimal effort mapping
     ...getOpenAIFamilyOptions(deploymentName, getReasoningEffort(providerConfig, modelConfig), {
-      mapMinimal: false,
       anyModelReasons: false,
     }),
     structuredMode: getStructuredMode(modelConfig.provider, deploymentName),
@@ -296,10 +278,8 @@ export function createChatModel(
             // The Responses API stores prompts and responses for 30 days by default; history is kept locally instead
             store: false,
             // xAI defaults to high effort, which is slow for every agent step. The effort is sent as is, since
-            // the AI SDK's reasoning setting maps xhigh to high on grok-4.7; xAI has no minimal effort
-            ...(effort && acceptsGrokReasoningEffort(modelName)
-              ? { reasoningEffort: effort === 'minimal' ? 'low' : effort }
-              : {}),
+            // the AI SDK's reasoning setting maps xhigh to high on grok-4.7
+            ...(effort && acceptsGrokReasoningEffort(modelName) ? { reasoningEffort: effort } : {}),
           },
         },
       };
@@ -348,7 +328,6 @@ export function createChatModel(
         ...base,
         model: openai.chat(modelName),
         ...getOpenAIFamilyOptions(modelName, effort, {
-          mapMinimal: true,
           anyModelReasons:
             (providerConfig.type ?? getProviderTypeByProviderId(provider)) === ProviderTypeEnum.CustomOpenAI,
         }),

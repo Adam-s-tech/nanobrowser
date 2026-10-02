@@ -154,7 +154,7 @@ describe('createChatModel', () => {
 
   it.each<[ModelConfig['reasoningEffort'], ModelConfig['reasoningEffort']]>([
     ['none', undefined],
-    ['minimal', 'minimal'],
+    ['low', 'low'],
     ['xhigh', 'xhigh'],
   ])('a saved effort %s is sent as %s', (effort, expected) => {
     expect(getReasoningEffort(provider(), model('anthropic', 'claude-opus-5-5', { reasoningEffort: effort }))).toBe(
@@ -184,52 +184,20 @@ describe('createChatModel', () => {
     });
   });
 
-  it('maps gpt-5.1 minimal to none for OpenAI but not for Azure', () => {
-    const openai = createChatModel(provider(), model('openai', 'gpt-5.1', { reasoningEffort: 'minimal' }));
-    expect(openai.providerOptions?.openai?.reasoningEffort).toBe('none');
+  it.each(['minimal', 'minimal/none'])('treats a saved %s effort as low', effort => {
+    const reasoningEffort = effort as ModelConfig['reasoningEffort'];
+    const openai = createChatModel(provider(), model('openai', 'gpt-5.4-mini', { reasoningEffort }));
+    expect(openai.providerOptions?.openai?.reasoningEffort).toBe('low');
 
-    const azureProvider = provider({
-      baseUrl: 'https://my-instance.openai.azure.com/',
-      azureDeploymentNames: ['gpt-5.1'],
-      azureApiVersion: '2025-04-01-preview',
-    });
-    const azure = createChatModel(azureProvider, model('azure_openai', 'gpt-5.1', { reasoningEffort: 'minimal' }));
-    expect(azure.providerOptions?.openai?.reasoningEffort).toBe('minimal');
-  });
-
-  it.each([
-    ['gpt-5.5', 'minimal'],
-    ['gpt-5.4-mini', 'none'],
-    ['gpt-6-luna', 'none'],
-    ['gpt-6-astra', 'low'],
-    ['gpt-6.1-sol', 'low'],
-  ])('maps minimal effort on %s to %s', (name, expected) => {
-    const chatModel = createChatModel(provider(), model('openai', name, { reasoningEffort: 'minimal' }));
-    expect(chatModel.providerOptions?.openai?.reasoningEffort).toBe(expected);
-  });
-
-  it.each([
-    ['gpt-5', 'minimal'],
-    ['gpt-5.4-mini', 'none'],
-    ['gpt-6.1-sol', 'low'],
-  ])('treats the legacy minimal/none effort on %s as minimal', (name, expected) => {
-    const chatModel = createChatModel(
-      provider(),
-      model('openai', name, { reasoningEffort: 'minimal/none' as ModelConfig['reasoningEffort'] }),
-    );
-    expect(chatModel.providerOptions?.openai?.reasoningEffort).toBe(expected);
-  });
-
-  it('treats the legacy minimal/none effort as minimal on Azure', () => {
     const azure = createChatModel(
       provider({
         baseUrl: 'https://my-instance.openai.azure.com/',
         azureDeploymentNames: ['gpt-5'],
         azureApiVersion: '2025-04-01-preview',
       }),
-      model('azure_openai', 'gpt-5', { reasoningEffort: 'minimal/none' as ModelConfig['reasoningEffort'] }),
+      model('azure_openai', 'gpt-5', { reasoningEffort }),
     );
-    expect(azure.providerOptions?.openai?.reasoningEffort).toBe('minimal');
+    expect(azure.providerOptions?.openai?.reasoningEffort).toBe('low');
   });
 
   it.each<[string, string]>([
@@ -564,7 +532,6 @@ describe('createChatModel', () => {
 
     it.each<[ModelConfig['reasoningEffort'], string | undefined]>([
       [undefined, 'low'],
-      ['minimal', 'low'],
       ['medium', 'medium'],
       ['xhigh', 'xhigh'],
       ['none', undefined],
